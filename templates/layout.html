@@ -1,0 +1,31 @@
+{% include 'includes/header.html' %}
+
+<section id="inner-headline">
+    <section id="inner-headline">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="inner-heading">
+              <ul class="breadcrumb">
+                <li><a href="/">Home</a> <i class="icon-angle-right"></i></li>
+                {% block headline%}
+                  <!--contents for the headline-->
+                {% endblock headline %}
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="content">
+      <div class="container">
+        <div class="row">
+
+          <div class="span8 ">
+            {% block main %}
+
+            {% endblock main %}
+          </div>
+          
+{% include 'includes/sidebar.html' %}
+{% include 'includes/footer.html' %}
