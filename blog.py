@@ -1,5 +1,9 @@
 from flask import Flask, render_template, url_for
+from process_form import UserLoginForm
+
+#App config
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'taoPSJfjPOjfkfsfD'
 
 @app.route('/')
 def home():
@@ -9,9 +13,10 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    form = UserLoginForm()
+    return render_template('login.html', form = form)
 
 @app.route('/register')
 def register():
