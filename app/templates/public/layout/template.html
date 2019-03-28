@@ -19,14 +19,14 @@
   </section>
   <section id="content">
     <div class="container">
-      <div class="row">
-        <div class="span8 ">
-          {% block main %} {% endblock main %}
-        </div>
-
-        {% include 'public/includes/sidebar.html' %} 
-        {% include 'public/includes/footer.html' %}
+      <div class="row">   
+        {% block main %} {% endblock main %}
+        {% block sidebar %} {% endblock sidebar %}
       </div>
     </div>
   </section>
+  {% include 'public/includes/footer.html' %}
+  </div>
+  </div>
+</section>
 </section>
