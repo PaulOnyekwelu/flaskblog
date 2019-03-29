@@ -4,8 +4,11 @@ from flask import render_template, url_for
 #admin page routing
 @app.route('/admin/dashboard')
 def dashboard():
-    return render_template('admin/dashboard.html')
+    title = 'Admin Dashboard'
+
+    return render_template('admin/dashboard.html', title = title)
 
 @app.route('/admin/profile')
 def profile():
-    return render_template('admin/profile.html')
+    title = 'Admin Profile'
+    return render_template('admin/profile.html', title = title)
