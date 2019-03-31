@@ -1,0 +1,93 @@
+{% extends 'admin/layout/template.html' %}
+{% block main %}
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    Category Section
+  </li>
+  <li class="breadcrumb-item active">View and Add New Categories</li>
+</ol>
+
+<!-- DataTables Example -->
+<div class="row">
+
+  <div class="col-md-6 mx-auto">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fas fa-table"></i>
+        Category Table
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Cat ID</th>
+                <th>Category</th>
+                <th>Category Url</th>
+                <th>Date Added</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Cat ID</th>
+                <th>Category</th>
+                <th>Category Url</th>
+                <th>Date Added</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>News</td>
+                <td>news</td>
+                <td>2008/11/13</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer small text-muted">
+        Updated yesterday at 11:59 PM
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mx-auto">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fas fa-table"></i>
+        Add New Category
+      </div>
+      <div class="row">
+        <div class="card-body">
+          <div class="col-md-8 mx-auto">
+            <form action="" method="">
+              <div class="form-group">
+                <label for="">Category Name</label>
+                <input type="text" name="cat" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="">Category URL</label>
+                  <input type="text" name="cat_url" class="form-control" required>
+                </div>
+              <div class="form-group">
+                <label for="">Date added</label>
+                <input type="text" name="date_added" class="form-control" required>
+              </div>
+              <div>
+                <input type="submit" value="Add New Category" class="btn btn-primary">
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer small text-muted">
+        <a href="{{url_for('dashboard')}}">Go To DashBoard</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main %}

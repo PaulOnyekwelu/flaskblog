@@ -1,0 +1,66 @@
+{% extends 'admin/layout/template.html' %}
+{% block main %}
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{{ url_for('viewPost') }}">Post</a>
+  </li>
+  <li class="breadcrumb-item active">Add New Post</li>
+</ol>
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Add New Post
+  </div>
+  <div class="card-body">
+      <div class="col-md-8 mx-auto">
+        <form action="" method="">
+          <div class="form-group">
+              <label for="">Post Title</label>
+            <input type="text" name="post_title" class="form-control" required>
+          </div>
+          <div class='row'>
+            <div class="form-group col-md-6" >
+                <label for="">Post author</label>
+                <select name="post_author" class="form-control" required>
+                  <option value="admin">Admin</option>
+                </select>  
+            </div>
+            <div class="form-group col-md-6">
+                <label for="">Navigation</label>
+                <select name="navigation" class="form-control" required>
+                  <option value="admin">news</option>
+                </select>  
+            </div>
+          </div>
+          <div class='row'>
+              <div class="form-group col-md-6 " >
+                  <label for="">Category</label>
+                  <select name="" class="form-control" required>
+                    <option value="admin" >most recent post</option>
+                  </select>  
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="">Post date</label>
+                  <input type="text" name="post_date" class="form-control" required>  
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="">Post Content</label>
+              <textarea name="post_content" id="" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+            <div>
+              <input type="submit" value="Add New Post" class="btn btn-primary">
+            </div>
+        </form>
+      </div>
+    
+  </div>
+  <div class="card-footer small text-muted">
+    <a href="{{url_for('dashboard')}}">Go To Dashboard</a>
+  </div>
+</div>
+{% endblock main %}
