@@ -12,11 +12,23 @@
 <!-- DataTables Example -->
 <div class="row">
 
-  <div class="col-md-6 mx-auto">
+  <div class="col-md-8 mx-auto">
     <div class="card mb-3">
       <div class="card-header">
         <i class="fas fa-table"></i>
         Category Table
+        {%with messages = get_flashed_messages()%}
+        {%if messages%}
+        {%for message in messages%}
+        <div class='alert alert-success alert-dismissable text-center' role='alert' aria-label="close">
+          <button data-dismiss='alert' class='close'>
+            <span aria-hidden="true">x</span>
+          </button>
+          {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+        {%endwith%}
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -30,16 +42,7 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tfoot>
-              <tr>
-                <th>Cat ID</th>
-                <th>Category</th>
-                <th>Category Url</th>
-                <th>Date Added</th>
-                <th>Action</th>
-              </tr>
-            </tfoot>
-            <tbody>
+            
               {%for category in categories%}
               <tr>
                 <td>{{category.0}}</td>
@@ -47,11 +50,61 @@
                 <td>{{category.2}}</td>
                 <td>{{category.3}}</td>
                 <td>
-                    <a href="/delete/{{category.0}}" class="btn btn-danger" 
-                      onclick="confirm('are you sure you want to delete?')">delete</a>
+                  <a href="/edit/{{category.0}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                    data-target="#catEditForm{{ category.0 }}">Edit</a>
+
+                  <a href="/delete/{{category.0}}" class="btn btn-danger btn-xs"
+                    onclick="return confirm('are you sure you want to delete?')">delete</a>
                 </td>
               </tr>
+
+              <!-- the edit category modal form -->
+              <div class="modal fade" id="catEditForm{{ category.0 }}" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">Edit Category</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="{{ url_for('category') }}" method="POST">
+                      <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                          <input type="hidden" name="cat_id" value="{{ category.0 }}">
+                          <input type="text" id="orangeForm-name" name='cat_name' class="form-control validate"
+                            value="{{ category.1 }}">
+                          <label data-error="wrong" data-success="right" for="orangeForm-name">
+                            Category Name
+                          </label>
+                        </div>
+                        <div class="md-form mb-5">
+                          <input type="text" id="orangeForm-email" name="cat_url" class="form-control validate"
+                            value="{{ category.2 }}">
+                          <label data-error="wrong" data-success="right" for="orangeForm-email">
+                            Category URL
+                          </label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                          <input type="text" id="orangeForm-pass" name="date_added" class="form-control validate"
+                            value="{{ category.3 }}">
+                          <label data-error="wrong" data-success="right" for="orangeForm-pass">
+                            Date Edited
+                          </label>
+                        </div>
+                      </div> 
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button class="btn btn-warning" type="submit">Update Category</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- end of edit category modal form -->
               {%endfor%}
+
             </tbody>
           </table>
         </div>
@@ -62,37 +115,27 @@
     </div>
   </div>
 
-  <div class="col-md-6 mx-auto">
+  <div class="col-md-4 mx-auto">
     <div class="card mb-3">
       <div class="card-header">
         <i class="fas fa-table"></i>
         Add New Category
-          {%with messages = get_flashed_messages()%}
-            {%if messages%}
-              {%for message in messages%}
-              <div class = 'alert alert-success alert-dismissable text-center' role='alert' aria-label="close">
-                <button data-dismiss='alert' class='close'>
-                  <span aria-hidden="true">x</span>
-                </button>
-                {{message}}
-              </div>
-              {%endfor%}
-            {%endif%}
-          {%endwith%}
+
       </div>
-      
+
       <div class="row">
         <div class="card-body">
           <div class="col-md-8 mx-auto">
             <form action="{{ url_for('category') }}" method="POST">
               <div class="form-group">
                 <label for="">Category Name</label>
+                <input type="hidden" name="cat_id" value="">
                 <input type="text" name="cat_name" class="form-control" required>
               </div>
               <div class="form-group">
-                  <label for="">Category URL</label>
-                  <input type="text" name="cat_url" class="form-control" required>
-                </div>
+                <label for="">Category URL</label>
+                <input type="text" name="cat_url" class="form-control" required>
+              </div>
               <div class="form-group">
                 <label for="">Date added</label>
                 <input type="text" name="date_added" class="form-control" required>
@@ -111,4 +154,5 @@
     </div>
   </div>
 </div>
+
 {% endblock main %}
