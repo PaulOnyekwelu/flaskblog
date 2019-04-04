@@ -4,4 +4,5 @@ from app.pyfiles.dbase import mysql
 
 @app.route('/admin/settings')
 def siteSetting():
-    return render_template('admin/site_setting.html')
+    title = 'Admin Site Settings'
+    return render_template('admin/site_setting.html', title=title)

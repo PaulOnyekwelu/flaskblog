@@ -4,4 +4,5 @@ from app.pyfiles.dbase import mysql
 
 @app.route('/admin/comment')
 def comment():
-    return render_template('admin/comment.html')
+    title = 'Admin Comment'
+    return render_template('admin/comment.html', title=title)

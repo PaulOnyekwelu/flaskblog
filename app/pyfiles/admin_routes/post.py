@@ -4,8 +4,10 @@ from app.pyfiles.dbase import mysql
 
 @app.route('/admin/new-post')
 def newPost():
-    return render_template('admin/new_post.html')
+    title = 'Admin New Post'
+    return render_template('admin/new_post.html', title=title)
 
 @app.route('/admin/view-post')
 def viewPost():
-    return render_template('admin/view_post.html')
+    title = 'Admin Post'
+    return render_template('admin/view_post.html', title=title)

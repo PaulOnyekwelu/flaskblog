@@ -5,4 +5,4 @@ from app.pyfiles.admin_routes import post
 from app.pyfiles.admin_routes import profile
 from app.pyfiles.admin_routes import comment
 from app.pyfiles.admin_routes import sitesetting
-from app.pyfiles.admin_routes import register
+from app.pyfiles.admin_routes import register 
