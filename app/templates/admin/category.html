@@ -45,21 +45,21 @@
             
               {%for category in categories%}
               <tr>
-                <td>{{category.0}}</td>
-                <td>{{category.1}}</td>
-                <td>{{category.2 }}</td>
-                <td>{{category.3}}</td>
+                <td>{{loop.index}}</td>
+                <td>{{category.cat_name}}</td>
+                <td>{{category.cat_url }}</td>
+                <td>{{category.date_added.strftime("%B %d , %Y") }}</td>
                 <td>
-                  <a href="/edit/{{category.0}}" class="btn btn-warning btn-xs" data-toggle="modal"
-                    data-target="#catEditForm{{ category.0 }}">Edit</a>
+                  <a href="/edit/{{category.cat_id}}" class="btn btn-warning btn-xs" data-toggle="modal"
+                    data-target="#catEditForm{{ category.cat_id }}">Edit</a>
 
-                  <a href="/delete/{{category.0}}" class="btn btn-danger btn-xs"
+                  <a href="/delete/{{category.cat_id}}" class="btn btn-danger btn-xs"
                     onclick="return confirm('are you sure you want to delete?')">delete</a>
                 </td>
               </tr>
 
               <!-- the edit category modal form -->
-              <div class="modal fade" id="catEditForm{{ category.0 }}" tabindex="-1" role="dialog"
+              <div class="modal fade" id="catEditForm{{ category.cat_id }}" tabindex="-1" role="dialog"
                 aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -72,26 +72,18 @@
                     <form action="{{ url_for('category') }}" method="POST">
                       <div class="modal-body mx-3">
                         <div class="md-form mb-5">
-                          <input type="hidden" name="cat_id" value="{{ category.0 }}">
+                          <input type="hidden" name="cat_id" value="{{ category.cat_id }}">
                           <input type="text" id="orangeForm-name" name='cat_name' class="form-control validate"
-                            value="{{ category.1 }}">
+                            value="{{ category.cat_name }}">
                           <label data-error="wrong" data-success="right" for="orangeForm-name">
                             Category Name
                           </label>
                         </div>
                         <div class="md-form mb-5">
                           <input type="text" id="orangeForm-email" name="cat_url" class="form-control validate"
-                            value="{{ category.2 }}">
+                            value="{{ category.cat_url }}">
                           <label data-error="wrong" data-success="right" for="orangeForm-email">
                             Category URL
-                          </label>
-                        </div>
-
-                        <div class="md-form mb-4">
-                          <input type="text" id="orangeForm-pass" name="date_added" class="form-control validate"
-                            value="{{ category.3 }}">
-                          <label data-error="wrong" data-success="right" for="orangeForm-pass">
-                            Date Edited
                           </label>
                         </div>
                       </div> 
@@ -135,10 +127,6 @@
               <div class="form-group">
                 <label for="">Category URL</label>
                 <input type="text" name="cat_url" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="">Date added</label>
-                <input type="text" name="date_added" class="form-control" required>
               </div>
               <div>
                 <input type="submit" value="Add New Category" class="btn btn-primary">

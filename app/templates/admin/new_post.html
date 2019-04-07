@@ -17,7 +17,7 @@
   </div>
   <div class="card-body">
       <div class="col-md-8 mx-auto">
-        <form action="" method="">
+        <form action="{{ url_for('newPost') }}" method="POST">
           <div class="form-group">
               <label for="">Post Title</label>
             <input type="text" name="post_title" class="form-control" required>
@@ -29,25 +29,13 @@
                   <option value="admin">Admin</option>
                 </select>  
             </div>
-            <div class="form-group col-md-6">
-                <label for="">Navigation</label>
-                <select name="navigation" class="form-control" required>
-                  <option value="admin">news</option>
+            <div class="form-group col-md-6 " >
+                <label for="">Category</label>
+                <select name="post_cat" class="form-control" required>
+                  <option value="admin" >most recent post</option>
                 </select>  
             </div>
           </div>
-          <div class='row'>
-              <div class="form-group col-md-6 " >
-                  <label for="">Category</label>
-                  <select name="" class="form-control" required>
-                    <option value="admin" >most recent post</option>
-                  </select>  
-              </div>
-              <div class="form-group col-md-6">
-                  <label for="">Post date</label>
-                  <input type="text" name="post_date" class="form-control" required>  
-              </div>
-            </div>
             <div class="form-group">
                 <label for="">Post Content</label>
               <textarea name="post_content" id="" cols="30" rows="10" class="form-control"></textarea>
