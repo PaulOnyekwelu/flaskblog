@@ -1,5 +1,7 @@
 {
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
     "python.pythonPath": "venv/bin/python",
-    "python.linting.pylintPath": "venv/bin/pylint"
+    "python.linting.pep8Path": "venv/bin/pep8",
+    "python.linting.pep8Enabled": true,
+    "python.linting.enabled": true
 }

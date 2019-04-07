@@ -25,7 +25,7 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <form>
+        <form action= "{{ url_for('register') }}" method="POST">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="login.html">Register</a>
+              <input type="submit" value='Register' class='btn btn-primary form-control'>
         </form>
         <div class="text-center">
           <a class="d-block small" href="{{ url_for('dashboard') }}">Return To Dashboard</a>
