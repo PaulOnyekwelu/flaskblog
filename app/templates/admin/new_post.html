@@ -43,7 +43,11 @@
                 <label for="">Category</label>
                 <select name="post_cat" class="form-control" required>
                   {% for category in categories %}
-                  <option value="{{category.cat_id}}" >{{category.cat_name}}</option>
+                    {% if category != '' %}
+                      <option value="{{category.cat_id}}" >{{category.cat_name}}</option>
+                    {% else %}
+                      <option value="" >No Data to display...</option>
+                    {% endif %}
                   {% endfor %}
                 </select>  
             </div>

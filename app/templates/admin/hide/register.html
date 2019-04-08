@@ -30,14 +30,15 @@
             <div class="form-row">
               <div class="col-md-6">
                 <div class="form-label-group">
-                  {{ form.fname(class='form-control', autofocus='autofocus', placeholder='First Name') }}
+                  <input type="hidden" name = "id" value = "">
+                  {{ form.fname(class='form-control', autofocus='autofocus', placeholder='Full Name') }}
                   {{ form.fname.label }}
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-label-group">
-                    {{ form.lname(class='form-control', autofocus='autofocus', placeholder='Last Name') }}
-                    {{ form.lname.label }}
+                    {{ form.username(class='form-control', autofocus='autofocus', placeholder='Username') }}
+                    {{ form.username.label }}
                 </div>
               </div>
             </div>

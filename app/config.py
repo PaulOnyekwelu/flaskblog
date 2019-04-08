@@ -25,11 +25,17 @@ class Category(db.Model):
 
 class Admin(db.Model):
     admin_id = db.Column(db.Integer, primary_key=True)
-    admin_name = db.Column(db.String(20), unique=True, nullable=False)
+    admin_full_name = db.Column(db.String(20))
+    admin_username = db.Column(db.String(20), unique=True, nullable=False)
+    admin_email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(50))
     post = db.relationship("Post", backref="author")
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, name, username, email, password):
+        self.admin_full_name = name
+        self.admin_username = username
+        self.admin_email = email
+        self.password = password
 
 
 class Post(db.Model):

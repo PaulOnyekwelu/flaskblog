@@ -29,7 +29,7 @@ def newPost():
             db.session.commit()
             message = "New Post was added successfully"
         flash(message)
-        return redirect(url_for(viewPost))
+        return redirect(url_for("viewPost"))
     return render_template('admin/new_post.html', title=title,
                            admins=admin_data, categories=categories_data)
 
