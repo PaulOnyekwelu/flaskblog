@@ -39,7 +39,7 @@ def category():
 @app.route('/delete/<string:del_id>')
 def delete(del_id):
     # this deletes a category
-    data = Category.query.filter_by(cat_id=del_id).first()
+    data = Category.query.get(del_id)
     db.session.delete(data)
     db.session.commit()
     flash('Category deleted successfully')

@@ -1,4 +1,11 @@
 {% extends 'admin/layout/template.html' %}
+
+{% block head %}
+<!-- include summernote css/js -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js" defer></script>
+{% endblock head %}
+
 {% block main %}
 
 <!-- Breadcrumbs-->
@@ -20,25 +27,30 @@
         <form action="{{ url_for('newPost') }}" method="POST">
           <div class="form-group">
               <label for="">Post Title</label>
+              <input type="hidden" name="id" class="form-control" required>
             <input type="text" name="post_title" class="form-control" required>
           </div>
           <div class='row'>
             <div class="form-group col-md-6" >
                 <label for="">Post author</label>
                 <select name="post_author" class="form-control" required>
-                  <option value="admin">Admin</option>
+                    {% for admin in admins %}
+                    <option value="{{admin.admin_id}}" >{{admin.admin_name}}</option>
+                    {% endfor %}
                 </select>  
             </div>
             <div class="form-group col-md-6 " >
                 <label for="">Category</label>
                 <select name="post_cat" class="form-control" required>
-                  <option value="admin" >most recent post</option>
+                  {% for category in categories %}
+                  <option value="{{category.cat_id}}" >{{category.cat_name}}</option>
+                  {% endfor %}
                 </select>  
             </div>
           </div>
             <div class="form-group">
                 <label for="">Post Content</label>
-              <textarea name="post_content" id="" cols="30" rows="10" class="form-control"></textarea>
+              <textarea id="content" name="post_content" cols="30" rows="10" class="form-control"></textarea>
             </div>
             <div>
               <input type="submit" value="Add New Post" class="btn btn-primary">
@@ -52,3 +64,14 @@
   </div>
 </div>
 {% endblock main %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+      $('#content').summernote({
+        placeholder: 'Post Content Here',
+        tabsize: 2,
+        height: 400
+      });
+    });
+</script>
+  {% endblock %}

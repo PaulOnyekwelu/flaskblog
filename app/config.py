@@ -1,9 +1,8 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-# from app import app
-app = Flask(__name__)
+from app import app
 
-app.secret_key = 'hello from silanka'
+app.secret_key = 'gdfght6y79uhg54'
 path = "mysql://root:root@localhost/flask_blog"
 app.config['SQLALCHEMY_DATABASE_URI'] = path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
