@@ -1,7 +1,7 @@
-from app import app
+from app import app, db
 from flask import render_template, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
-from app.config import db, Category
+from app.model import Category
 from datetime import datetime
 
 

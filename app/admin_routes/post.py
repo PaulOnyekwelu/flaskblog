@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, url_for, redirect, request, flash
-from app.config import db, Post, Admin, Category
+from app.model import db, Post, Admin, Category
 from datetime import datetime
 
 
@@ -37,4 +37,4 @@ def newPost():
 @app.route('/admin/view-post')
 def viewPost():
     title = 'Admin Post'
-    return render_template('admin/view_post.html', title=title)                                           
+    return render_template('admin/view_post.html', title=title) 

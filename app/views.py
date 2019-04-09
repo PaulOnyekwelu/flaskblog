@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, url_for
-from app.config import Category
+from app.model import Category
 
 
 # front page routing
@@ -33,3 +33,15 @@ def forgot():
 @app.route("/category/<cat_id>")
 def cat(cat_id):
     return render_template("public/cat.html")
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    title = '404 page not found'
+    return render_template('404.html', title=title), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    title = 'internal_server_error'
+    return render_template('500.html', title=title), 500

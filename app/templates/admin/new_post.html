@@ -35,7 +35,7 @@
                 <label for="">Post author</label>
                 <select name="post_author" class="form-control" required>
                     {% for admin in admins %}
-                    <option value="{{admin.admin_id}}" >{{admin.admin_name}}</option>
+                    <option value="{{admin.admin_id}}" >{{admin.admin_username}}</option>
                     {% endfor %}
                 </select>  
             </div>

@@ -1,13 +1,4 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from app import app
-
-app.secret_key = 'gdfght6y79uhg54'
-path = "mysql://root:root@localhost/flask_blog"
-app.config['SQLALCHEMY_DATABASE_URI'] = path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
+from app import db
 
 
 class Category(db.Model):
@@ -29,7 +20,7 @@ class Admin(db.Model):
     admin_username = db.Column(db.String(20), unique=True, nullable=False)
     admin_email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50))
-    post = db.relationship("Post", backref="author")
+    post = db.relationship("Post", backref="author", lazy=True)
 
     def __init__(self, name, username, email, password):
         self.admin_full_name = name
@@ -52,15 +43,3 @@ class Post(db.Model):
         self.post_content = content
         self.post_date = date
         self.post_cat = cat
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    title = '404 page not found'
-    return render_template('404.html', title=title), 404
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    title = 'internal_server_error'
-    return render_template('500.html', title=title), 500

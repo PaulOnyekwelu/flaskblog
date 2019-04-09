@@ -1,7 +1,7 @@
-from app import app
+from app import app, db
 from flask import render_template, url_for, redirect, request, flash
 from wtforms import Form, StringField, PasswordField, validators
-from app.config import Admin, db
+from app.model import Admin
 
 
 # user registration form class

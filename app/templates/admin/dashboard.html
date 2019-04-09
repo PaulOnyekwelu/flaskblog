@@ -8,6 +8,24 @@
     <li class="breadcrumb-item active">Overview</li>
   </ol>
 
+<!-- flash message -->
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      {%with messages = get_flashed_messages()%}
+      {%if messages%}
+        {%for message in messages%}
+        <div class='alert alert-success alert-dismissable text-center' role='alert' aria-label="close">
+          <button data-dismiss='alert' class='close'>
+            <span aria-hidden="true">x</span>
+          </button>
+          {{message}}
+        </div>
+        {%endfor%}
+      {%endif%}
+    {%endwith%}
+    </div>
+  </div>
+  
   <!-- Icon Cards-->
   <div class="row">
     <div class="col-xl-3 col-sm-6 mb-3">
@@ -76,6 +94,7 @@
     </div>
   </div>
  <!-- End of Icon Cards-->
+
 
   <!-- DataTables Example -->
   <div class="card mb-3">
