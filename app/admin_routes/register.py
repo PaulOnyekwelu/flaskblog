@@ -1,7 +1,8 @@
-from app import app, db
+from app import app, db, bcrypt
 from flask import render_template, url_for, redirect, request, flash
 from wtforms import Form, StringField, PasswordField, validators
 from app.model import Admin
+from flask_login import current_user
 
 
 # user registration form class
@@ -14,31 +15,47 @@ class UserRegistration(Form):
                             validators.Length(min=3, max=30)])
     email = StringField('Email',
                         [validators.email(), validators.DataRequired()])
-    password = PasswordField('Password', [validators.DataRequired(),
-                                          validators.EqualTo('confirm',
-                                          message='both password must match')])
+    password = PasswordField('Password', [validators.DataRequired()])
     confirm = PasswordField('Confirm Password',
-                            [validators.DataRequired()])
+                            validators=[validators.DataRequired(),
+                                        validators.EqualTo('password')])
+
+    def validate_username(self, username):
+        user = Admin.query.filter_by(admin_username=username.data).first()
+        if user:
+            raise validators.ValidationError("""
+            username not available, choose a different one""")
+
+    def validate_email(self, email):
+        user = Admin.query.filter_by(admin_email=email.data).first()
+        if user:
+            raise validators.ValidationError('''
+            email already in use by another account''')
 
 
 @app.route('/admin/hide/register', methods=['GET', 'POST'])
 def register():
-    title = 'Registration Page'
-    form = UserRegistration()
-    if request.method == 'POST' and form.validate:
-        rec = request.form
-        fullname = rec["fname"]
-        username = rec["username"]
-        email = rec["email"]
-        password = rec["password"]
-        if rec["id"] != "":
-            pass
-        else:
-            user = Admin(fullname, username, email, password)
-            db.session.add(user)
-            db.session.commit()
-            message = "User Successfully Registered!"
-        flash(message)
-        return redirect(url_for("dashboard"))
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+    elif current_user.is_authenticated:
+        title = 'Registration Page'
+        form = UserRegistration(request.form)
+        if request.method == 'POST' and form.validate():
+            rec = request.form
+            fullname = form.fname.data
+            username = form.username.data
+            email = form.email.data
+            pwd = bcrypt.generate_password_hash(form.password.data)
+            password = pwd.decode("utf-8")
+            if rec["id"] != "":
+                pass
+            else:
+                user = Admin(fullname, username, email, password)
+                db.session.add(user)
+                db.session.commit()
+                message = "User Successfully Registered!"
+            flash(message)
+            return redirect(url_for("dashboard"))
 
-    return render_template('admin/hide/register.html', title=title, form=form)
+        return render_template('admin/hide/register.html',
+                               title=title, form=form)

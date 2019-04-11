@@ -9,24 +9,21 @@
 
 {% block main %}
 <!-- Blog Post -->
+
+{% for post in posts %}
 <div class="card mb-4">
-  <h2 class="card-title">Post Title</h2>
+  <h2 class="card-title mx-auto">{{ post.post_title }}</h2>
   <hr>
   <div class="card-body">
-    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap" />
-    <p class="card-text">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a
-      laboriosam. Dicta expedita corporis animi vero voluptate
-      voluptatibus possimus, veniam magni quis!
-    </p>
+    {{ post.post_content | safe }}
     <a href="#" class="btn btn-primary">Read More &rarr;</a>
   </div>
   <div class="card-footer text-muted">
-    Posted on January 1, 2017 by
-    <a href="#">Nwangwu Chika</a>
+    Posted on {{ post.post_date.strftime("%B %d, %Y") }} by
+    {{ post.author.admin_username }}
   </div>
 </div>
+{% endfor %}
 
 <!-- Pagination -->
 <ul class="pagination justify-content-center mb-4">

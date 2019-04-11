@@ -1,4 +1,5 @@
-from app import db
+from app import db, login_manager
+from flask_login import UserMixin
 
 
 class Category(db.Model):
@@ -6,7 +7,7 @@ class Category(db.Model):
     cat_name = db.Column(db.String(20), unique=True, nullable=False)
     cat_url = db.Column(db.String(20), unique=True, nullable=False)
     date_added = db.Column(db.DateTime)
-    # post = db.Column(db.relationship("Post", backref="category"))
+    post = db.relationship("Post", backref="category", lazy=True)
 
     def __init__(self, cat_name, cat_url, date):
         self.cat_name = cat_name
@@ -14,8 +15,8 @@ class Category(db.Model):
         self.date_added = date
 
 
-class Admin(db.Model):
-    admin_id = db.Column(db.Integer, primary_key=True)
+class Admin(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
     admin_full_name = db.Column(db.String(20))
     admin_username = db.Column(db.String(20), unique=True, nullable=False)
     admin_email = db.Column(db.String(50), unique=True, nullable=False)
@@ -31,7 +32,7 @@ class Admin(db.Model):
 
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
-    post_author = db.Column(db.Integer, db.ForeignKey("admin.admin_id"))
+    post_author = db.Column(db.Integer, db.ForeignKey("admin.id"))
     post_title = db.Column(db.String(255), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     post_date = db.Column(db.DateTime)

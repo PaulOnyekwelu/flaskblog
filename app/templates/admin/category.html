@@ -17,10 +17,10 @@
       <div class="card-header">
         <i class="fas fa-table"></i>
         Category Table
-        {%with messages = get_flashed_messages()%}
+        {%with messages = get_flashed_messages(with_categories=True)%}
           {%if messages%}
-            {%for message in messages%}
-            <div class='alert alert-success alert-dismissable text-center' role='alert' aria-label="close">
+            {%for category, message in messages%}
+            <div class='alert alert-{{category}} alert-dismissable text-center' role='alert' aria-label="close">
               <button data-dismiss='alert' class='close'>
                 <span aria-hidden="true">x</span>
               </button>
@@ -72,6 +72,7 @@
                     <form action="{{ url_for('category') }}" method="POST">
                       <div class="modal-body mx-3">
                         <div class="md-form mb-5">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                           <input type="hidden" name="cat_id" value="{{ category.cat_id }}">
                           <input type="text" id="orangeForm-name" name='cat_name' class="form-control validate"
                             value="{{ category.cat_name }}">
@@ -121,6 +122,7 @@
             <form action="{{ url_for('category') }}" method="POST">
               <div class="form-group">
                 <label for="">Category Name</label>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <input type="hidden" name="cat_id" value="">
                 <input type="text" name="cat_name" class="form-control" required>
               </div>
