@@ -20,7 +20,7 @@ class Admin(db.Model, UserMixin):
     admin_full_name = db.Column(db.String(20))
     admin_username = db.Column(db.String(20), unique=True, nullable=False)
     admin_email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(50))
+    password = db.Column(db.String(70))
     post = db.relationship("Post", backref="author", lazy=True)
 
     def __init__(self, name, username, email, password):
@@ -37,6 +37,7 @@ class Post(db.Model):
     post_content = db.Column(db.Text, nullable=False)
     post_date = db.Column(db.DateTime)
     post_cat = db.Column(db.Integer, db.ForeignKey("category.cat_id"))
+    comment = db.relationship("Comment", backref="post", lazy=True)
 
     def __init__(self, author, title, content, date, cat):
         self.post_author = author
@@ -44,3 +45,17 @@ class Post(db.Model):
         self.post_content = content
         self.post_date = date
         self.post_cat = cat
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(30), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.post_id"))
+
+    def __init__(self, name, email, content, post):
+        self.name = name
+        self.email = email
+        self.content = content
+        self.post_id = post

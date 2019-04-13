@@ -10,29 +10,36 @@
 {% block main %}
 <!-- Blog Post -->
 
-{% for post in posts %}
-<div class="card mb-4">
-  <h2 class="card-title mx-auto">{{ post.post_title }}</h2>
-  <hr>
-  <div class="card-body">
-    {{ post.post_content | safe }}
-    <a href="#" class="btn btn-primary">Read More &rarr;</a>
-  </div>
+{% for post in posts.items %}
+<div class="card mb-2">
+  
   <div class="card-footer text-muted">
+    <h2 class="card-title mx-auto"><a href="{{url_for('post', post_id=post.post_id )}}">{{ post.post_title }}</a></h2>
+    <hr>
     Posted on {{ post.post_date.strftime("%B %d, %Y") }} by
     {{ post.author.admin_username }}
   </div>
+  <div class="card-body">
+    {{ post.post_content | safe }}
+    <a href="{{url_for('post', post_id=post.post_id )}}" class="btn btn-primary">Read More &rarr;</a>
+  </div>
+  
 </div>
 {% endfor %}
 
+
 <!-- Pagination -->
 <ul class="pagination justify-content-center mb-4">
-  <li class="page-item disabled">
-    <a class="page-link" href="#">&larr; Newer</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="#">Older &rarr;</a>
-  </li>
+    {% if posts.has_prev %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('home', page=posts.prev_num) }}">&larr; Newer</a>
+    </li>
+    {% endif %}
+    {% if posts.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('home', page=posts.next_num) }}">Older &rarr;</a>
+      </li>
+    {% endif %}
 </ul>
 {% endblock %}
 

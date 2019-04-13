@@ -2,7 +2,7 @@ from app import app, db, bcrypt
 from flask import render_template, url_for, redirect, request, flash
 from wtforms import Form, StringField, PasswordField, validators
 from app.model import Admin
-from flask_login import current_user
+from flask_login import login_required
 
 
 # user registration form class
@@ -34,28 +34,26 @@ class UserRegistration(Form):
 
 
 @app.route('/admin/hide/register', methods=['GET', 'POST'])
+@login_required
 def register():
-    if not current_user.is_authenticated:
-        return redirect(url_for("login"))
-    elif current_user.is_authenticated:
-        title = 'Registration Page'
-        form = UserRegistration(request.form)
-        if request.method == 'POST' and form.validate():
-            rec = request.form
-            fullname = form.fname.data
-            username = form.username.data
-            email = form.email.data
-            pwd = bcrypt.generate_password_hash(form.password.data)
-            password = pwd.decode("utf-8")
-            if rec["id"] != "":
-                pass
-            else:
-                user = Admin(fullname, username, email, password)
-                db.session.add(user)
-                db.session.commit()
-                message = "User Successfully Registered!"
-            flash(message)
-            return redirect(url_for("dashboard"))
+    title = 'Registration Page'
+    form = UserRegistration(request.form)
+    if request.method == 'POST' and form.validate():
+        rec = request.form
+        fullname = form.fname.data
+        username = form.username.data
+        email = form.email.data
+        pwd = bcrypt.generate_password_hash(form.password.data)
+        password = pwd.decode("utf-8")
+        if rec["id"] != "":
+            pass
+        else:
+            user = Admin(fullname, username, email, password)
+            db.session.add(user)
+            db.session.commit()
+            message = "User Successfully Registered!"
+        flash(message)
+        return redirect(url_for("dashboard"))
 
-        return render_template('admin/hide/register.html',
-                               title=title, form=form)
+    return render_template('admin/hide/register.html',
+                           title=title, form=form)

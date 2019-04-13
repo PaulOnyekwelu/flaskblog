@@ -1,18 +1,42 @@
-from app import app, bcrypt, login_manager
+from app import app, db, bcrypt, login_manager
 from flask import render_template, url_for, request, redirect, flash
-from app.model import Category, Post, Admin
-from flask_login import login_user, current_user, logout_user
+from app.model import Category, Post, Admin, Comment
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 # front page routing
 @app.route('/')
+@app.route('/<int:page_num>')
 def home():
     title = 'Home Page'
     cat = Category.query.all()
-    post = Post.query.all()
+    post = Post.query.paginate(per_page=2, error_out=True)
 
     return render_template('public/index.html', title=title,
                            category=cat, posts=post)
+
+
+@app.route('/post-<int:post_id>', methods=["GET", "POST"])
+def post(post_id):
+    title = 'Post'
+    # processing comments by users and guest
+    if request.method == "POST":
+        rec = request.form
+        name = rec["name"]
+        email = rec["email"]
+        content = rec["content"]
+        post_id = rec["post_id"]
+
+        # processing the add comment to post
+        comment = Comment(name, email, content, post_id)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(request.url)
+
+    post = Post.query.filter_by(post_id=post_id).first()
+    comments = Comment.query.filter_by(post_id=post_id).all()
+    return render_template('public/post.html', title=title, post=post,
+                           comments=comments)
 
 
 @app.route('/about')
@@ -31,11 +55,14 @@ def login():
         if user and bcrypt.check_password_hash(user.password,
                                                request.form["password"]):
             login_user(user, remember=request.form.get('remember'))
+            next_page = request.args.get("next")
+            dashboard = url_for('dashboard')
             flash("you are successfully logged in!", "success")
-            return redirect(url_for('dashboard'))
+            return redirect(next_page) if next_page else redirect(dashboard)
         else:
             flash("invalid Login Details", "danger")
     return render_template('public/login.html', title=title)
+
 
 # validation of remember token
 @login_manager.user_loader
