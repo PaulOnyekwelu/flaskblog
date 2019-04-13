@@ -1,5 +1,17 @@
 {% extends "public/layout/template.html" %}
 
+<!-- macros content -->
+{% macro countCheck(content) -%}
+{% for j in range(content | length): %}
+  {% if content[j] == "<" and content[j+1] == "p": %}
+    {% if loop.first %}
+      {{ content[:j+500] | safe }}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{%- endmacro %}
+
+
 {% block page_heading %}
 <h1 class="my-4">
   Page Heading
@@ -12,7 +24,6 @@
 
 {% for post in posts.items %}
 <div class="card mb-2">
-  
   <div class="card-footer text-muted">
     <h2 class="card-title mx-auto"><a href="{{url_for('post', post_id=post.post_id )}}">{{ post.post_title }}</a></h2>
     <hr>
@@ -20,7 +31,9 @@
     {{ post.author.admin_username }}
   </div>
   <div class="card-body">
-    {{ post.post_content | safe }}
+    <!-- the macro function countCheck is defined at the top of the page -->
+    {{ countCheck(content=post.post_content)}}
+    ...
     <a href="{{url_for('post', post_id=post.post_id )}}" class="btn btn-primary">Read More &rarr;</a>
   </div>
   

@@ -4,14 +4,13 @@ from app.model import Category, Post, Admin, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-# front page routing
+#  front page routing
 @app.route('/')
 @app.route('/<int:page_num>')
 def home():
     title = 'Home Page'
     cat = Category.query.all()
     post = Post.query.paginate(per_page=2, error_out=True)
-
     return render_template('public/index.html', title=title,
                            category=cat, posts=post)
 
