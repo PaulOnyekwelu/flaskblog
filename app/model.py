@@ -52,10 +52,12 @@ class Comment(db.Model):
     name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime)
     post_id = db.Column(db.Integer, db.ForeignKey("post.post_id"))
 
-    def __init__(self, name, email, content, post):
+    def __init__(self, name, email, content, post, date):
         self.name = name
         self.email = email
         self.content = content
         self.post_id = post
+        self.date = date

@@ -4,140 +4,70 @@
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <h5>Comments</h5>
+      <a href="#">Post</a>
     </li>
-    <li class="breadcrumb-item active">Overview</li>
-  </ol>
-
-  <!-- Icon Cards-->
-  <div class="row">
-    <div class="col-xl-3 col-sm-6 mb-3">
-      <div class="card text-white bg-primary o-hidden h-100">
-        <div class="card-body">
-          <div class="card-body-icon">
-            <i class="fas fa-fw fa-comments"></i>
-          </div>
-          <div class="mr-5">26 New Messages!</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="#">
-          <span class="float-left">View Details</span>
-          <span class="float-right">
-            <i class="fas fa-angle-right"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-      <div class="card text-white bg-warning o-hidden h-100">
-        <div class="card-body">
-          <div class="card-body-icon">
-            <i class="fas fa-fw fa-list"></i>
-          </div>
-          <div class="mr-5">11 New Tasks!</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="#">
-          <span class="float-left">View Details</span>
-          <span class="float-right">
-            <i class="fas fa-angle-right"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-      <div class="card text-white bg-success o-hidden h-100">
-        <div class="card-body">
-          <div class="card-body-icon">
-            <i class="fas fa-fw fa-shopping-cart"></i>
-          </div>
-          <div class="mr-5">123 New Orders!</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="#">
-          <span class="float-left">View Details</span>
-          <span class="float-right">
-            <i class="fas fa-angle-right"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-      <div class="card text-white bg-danger o-hidden h-100">
-        <div class="card-body">
-          <div class="card-body-icon">
-            <i class="fas fa-fw fa-life-ring"></i>
-          </div>
-          <div class="mr-5">13 New Tickets!</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="#">
-          <span class="float-left">View Details</span>
-          <span class="float-right">
-            <i class="fas fa-angle-right"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-  </div>
- <!-- End of Icon Cards-->
- 
+    <li class="breadcrumb-item active">Add New Post</li>
+  </ol> 
   <!-- DataTables Example -->
   <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>
-      Data Table Example
+      Post Comments
+      {%with messages = get_flashed_messages(with_categories=True)%}
+        {%if messages%}
+          {%for category, message in messages%}
+          <div class='alert alert-{{category}} alert-dismissable text-center' role='alert' aria-label="close">
+            <button data-dismiss='alert' class='close'>
+              <span aria-hidden="true">x</span>
+            </button>
+            {{message}}
+          </div>
+          {%endfor%}
+        {%endif%}
+      {%endwith%}
     </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>#</th>
+              <th>Commenter</th>
+              <th>Email</th>
+              <th>Content</th>
+              <th>Post Title</th>
+              <th>Date</th>
+              <th>Action</th>
+
             </tr>
           </thead>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>#</th>
+              <th>Commenter</th>
+              <th>Email</th>
+              <th>Content</th>
+              <th>Post Title</th>
+              <th>Date</th>
+              <th>Action</th>
+
             </tr>
           </tfoot>
           <tbody>
+            {% for comment in comments %}
             <tr>
-              <td>Shad Decker</td>
-              <td>Regional Director</td>
-              <td>Edinburgh</td>
-              <td>51</td>
-              <td>2008/11/13</td>
-              <td>$183,000</td>
+              <td>{{ loop.index }}</td>
+              <td>{{ comment.name }}</td>
+              <td>{{ comment.email }}</td>
+              <td ><div style="width:400px; word-wrap:break-word;">{{ comment.content }}</div></td>
+              <td><div style="width:150px; word-wrap:break-word;">{{ comment.post.post_title }}</div></td>
+              <td>{{ comment.date.strftime("%B %d , %Y") }}</td>
+              <td><a href="{{url_for('del_comment', del_id=comment.id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete file')">Delete</a> </td>
             </tr>
-            <tr>
-              <td>Michael Bruce</td>
-              <td>Javascript Developer</td>
-              <td>Singapore</td>
-              <td>29</td>
-              <td>2011/06/27</td>
-              <td>$183,000</td>
-            </tr>
-            <tr>
-              <td>Donna Snider</td>
-              <td>Customer Support</td>
-              <td>New York</td>
-              <td>27</td>
-              <td>2011/01/25</td>
-              <td>$112,000</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="card-footer small text-muted">
-      Updated yesterday at 11:59 PM
     </div>
   </div>
 {% endblock main %}

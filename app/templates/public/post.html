@@ -52,13 +52,14 @@
       {% if comment %}
             
               <div class="card-footer text-muted">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <img class="d-flex mr-3 rounded-circle" src="{{ url_for('static', filename='public/img/noimg.jpg') }}" alt="">
                 <span>
-                  <h5 class="mt-0"></h5>{{ comment.name }}</h5>
+                  <h5 class="mt-0"></h5> By {{ comment.name }} on {{ comment.date.strftime("%B %d, %Y") }}</h5>
                 </span>
               </div>
               <div class="card-body">
                   {{ comment.content }}
+                  <hr>
               </div>
       {% endif %}
     {% endfor %}

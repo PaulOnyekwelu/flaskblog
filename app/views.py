@@ -2,6 +2,7 @@ from app import app, db, bcrypt, login_manager
 from flask import render_template, url_for, request, redirect, flash
 from app.model import Category, Post, Admin, Comment
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import datetime
 
 
 #  front page routing
@@ -25,9 +26,10 @@ def post(post_id):
         email = rec["email"]
         content = rec["content"]
         post_id = rec["post_id"]
+        date = datetime.now()
 
         # processing the add comment to post
-        comment = Comment(name, email, content, post_id)
+        comment = Comment(name, email, content, post_id, date)
         db.session.add(comment)
         db.session.commit()
         return redirect(request.url)

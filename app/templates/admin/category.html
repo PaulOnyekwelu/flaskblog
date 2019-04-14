@@ -53,7 +53,7 @@
                   <a href="/edit/{{category.cat_id}}" class="btn btn-warning btn-xs" data-toggle="modal"
                     data-target="#catEditForm{{ category.cat_id }}">Edit</a>
 
-                  <a href="/delete/{{category.cat_id}}" class="btn btn-danger btn-xs"
+                  <a href="{{url_for('del_category', del_id=category.cat_id)}}" class="btn btn-danger btn-xs"
                     onclick="return confirm('are you sure you want to delete?')">delete</a>
                 </td>
               </tr>

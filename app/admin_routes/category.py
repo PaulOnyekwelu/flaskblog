@@ -1,6 +1,5 @@
 from app import app, db
 from flask import render_template, url_for, redirect, request, flash
-from flask_sqlalchemy import SQLAlchemy
 from app.model import Category
 from datetime import datetime
 from flask_login import login_required
@@ -39,9 +38,9 @@ def category():
                            categories=data, title=title)
 
 
-@app.route('/delete/<string:del_id>')
+@app.route('/admin/category/<string:del_id>')
 @login_required
-def delete(del_id):
+def del_category(del_id):
     # this deletes a category
     data = Category.query.get(del_id)
     db.session.delete(data)
