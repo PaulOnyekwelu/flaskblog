@@ -38,7 +38,7 @@ def category():
                            categories=data, title=title)
 
 
-@app.route('/admin/category/<string:del_id>')
+@app.route('/admin/category/del-<string:del_id>')
 @login_required
 def del_category(del_id):
     # this deletes a category

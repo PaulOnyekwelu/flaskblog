@@ -12,7 +12,7 @@ def comment():
     return render_template('admin/comment.html', title=title, comments=comment)
 
 
-@app.route('/admin/comment/<del_id>')
+@app.route('/admin/comment/del-<del_id>')
 @login_required
 def del_comment(del_id):
     # this deletes a category

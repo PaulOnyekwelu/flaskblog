@@ -50,13 +50,22 @@ def newPost():
                            admins=admin_data, categories=categories_data)
 
 
-@app.route('/admin/view-post')
+@app.route('/admin/viewpost')
 @login_required
 def viewPost():
     title = 'Admin Post'
     # querying the database for post information
-    data = Post.query.all()
+    data = Post.query.order_by(Post.post_id.desc())
     return render_template('admin/view_post.html', title=title, posts=data)
+
+
+@app.route('/admin/viewpost-<del_id>')
+def post_del(del_id):
+    # for deleting post based on their id in the database
+    post = Post.query.get(del_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("viewPost"))
 
 
 @app.route('/files/<filename>')

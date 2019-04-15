@@ -11,7 +11,8 @@ from datetime import datetime
 def home():
     title = 'Home Page'
     cat = Category.query.all()
-    post = Post.query.paginate(per_page=2, error_out=True)
+    query = Post.query.order_by(Post.post_id.desc())
+    post = query.paginate(per_page=5, error_out=True)
     return render_template('public/index.html', title=title,
                            category=cat, posts=post)
 
@@ -34,10 +35,12 @@ def post(post_id):
         db.session.commit()
         return redirect(request.url)
 
+    cat = Category.query.all()
     post = Post.query.filter_by(post_id=post_id).first()
-    comments = Comment.query.filter_by(post_id=post_id).all()
+    query = Comment.query.filter_by(post_id=post_id)
+    comments = query.order_by(Comment.id.desc())
     return render_template('public/post.html', title=title, post=post,
-                           comments=comments)
+                           comments=comments, category=cat)
 
 
 @app.route('/about')

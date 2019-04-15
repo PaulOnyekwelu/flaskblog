@@ -4,9 +4,9 @@
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="#">Post</a>
+      <a href="{{ url_for('newPost') }}">New Post</a>
     </li>
-    <li class="breadcrumb-item active">Add New Post</li>
+    <li class="breadcrumb-item active">View Post</li>
   </ol>
 
   <!-- flash message -->
@@ -43,6 +43,7 @@
               <th>Post Author</th>
               <th>Post Category</th>
               <th>Post Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tfoot>
@@ -52,6 +53,7 @@
                 <th>Post Author</th>
                 <th>Post Category</th>
                 <th>Post Date</th>
+                <th>Action</th>
             </tr>
           </tfoot>
           <tbody>
@@ -62,6 +64,10 @@
               <td>{{ post.author.admin_username }}</td>
               <td>{{ post.category.cat_name }}</td>
               <td>{{ post.post_date.strftime("%B %d , %Y") }}</td>
+              <td>
+                <a href="edit{{}}" class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('post_del', del_id=post.post_id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete file')">Delete</a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
