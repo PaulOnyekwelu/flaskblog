@@ -65,7 +65,7 @@
               <td>{{ post.category.cat_name }}</td>
               <td>{{ post.post_date.strftime("%B %d , %Y") }}</td>
               <td>
-                <a href="edit{{}}" class="btn btn-warning">Edit</a>
+                <a href="{{url_for('newPost', id=post.post_id)}}" class="btn btn-warning">Edit</a>
                 <a href="{{ url_for('post_del', del_id=post.post_id)}}" class="btn btn-danger" onclick="return confirm('Do you really want to delete file')">Delete</a>
               </td>
             </tr>

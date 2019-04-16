@@ -7,7 +7,7 @@ from datetime import datetime
 
 #  front page routing
 @app.route('/')
-@app.route('/<int:page_num>')
+@app.route('/')
 def home():
     title = 'Home Page'
     cat = Category.query.all()
@@ -36,7 +36,7 @@ def post(post_id):
         return redirect(request.url)
 
     cat = Category.query.all()
-    post = Post.query.filter_by(post_id=post_id).first()
+    post = Post.query.get_or_404(post_id)
     query = Comment.query.filter_by(post_id=post_id)
     comments = query.order_by(Comment.id.desc())
     return render_template('public/post.html', title=title, post=post,
