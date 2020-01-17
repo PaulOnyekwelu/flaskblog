@@ -7,7 +7,7 @@ HOW TO USE THE FILE
 - create a database named flask_blog
 -Create a virtual enviroment and install the requirements.txt file - pip install -r requirements.txt
 
-then run the following functions to install the database model
+then run the following commands to install the database model
 - 
 - python 
 - from app import db
